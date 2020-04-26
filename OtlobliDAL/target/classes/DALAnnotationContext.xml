@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+     
+
+    <context:annotation-config/>
+    <context:component-scan base-package="net.haitham.otloblidal;"/>
+       
+    <aop:config proxy-target-class="true" />
+    <aop:aspectj-autoproxy />
+    <!-- To solve proxy problem | END -->   
+           
+    <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+   <context:property-placeholder location="classpath:jdbc.properties"/> <!-- To import database properties file -->
+    <!-- DataSource bean which is responsible for Database Connection | END -->   
+
+
+    <bean id="sessionFactory"  class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="annotatedClasses">
+            <list>
+                <value>net.haitham.otloblidal.entity.annotation.Country</value>
+                <value>net.haitham.otloblidal.entity.annotation.City</value>
+                <value>net.haitham.otloblidal.entity.annotation.Area</value>
+                <value>net.haitham.otloblidal.entity.annotation.Branch</value>
+                <value>net.haitham.otloblidal.entity.annotation.Category</value>
+                <value>net.haitham.otloblidal.entity.annotation.Consumer</value>
+                <value>net.haitham.otloblidal.entity.annotation.ConsumerAddress</value>
+                <value>net.haitham.otloblidal.entity.annotation.DeliveryArea</value>
+                <value>net.haitham.otloblidal.entity.annotation.Order</value>
+                <value>net.haitham.otloblidal.entity.annotation.OrderItem</value>
+                <value>net.haitham.otloblidal.entity.annotation.Product</value>
+                <value>net.haitham.otloblidal.entity.annotation.Provider</value>
+                <value>net.haitham.otloblidal.entity.annotation.ProviderUser</value>
+                <value>net.haitham.otloblidal.entity.annotation.AdminUser</value>
+                
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.MySQLDialect
+            </value>
+        </property>
+    </bean>
+    <!-- SessionFactory bean which is responsible for Hibernate Session Management | START -->   
+    
+    <!-- ExceptionTranslationPostProcessor Bean for translating hibernate exceptions to spring | START -->   
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+    <!-- ExceptionTranslationPostProcessor Bean for translating hibernate exceptions to spring | END --> 
+ <tx:annotation-driven/>
+    <bean id="transactionManager"
+           class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>  
+
+</beans>

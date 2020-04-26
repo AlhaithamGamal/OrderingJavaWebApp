@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/online_ordering_db?zeroDateTimeBehavior=convertToNull</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+        <property name="use_sql_comments">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Area"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Category"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.DeliveryArea"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Product"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.AdminUser"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.ConsumerAddress"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.OrderItem"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.City"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.ProviderUser"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Consumer"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Branch"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Order"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Country"/>
+        <mapping class="net.haitham.otloblidal.entity.annotation.Provider"/>
+    </session-factory>
+</hibernate-configuration>
